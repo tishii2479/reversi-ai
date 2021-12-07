@@ -1,4 +1,5 @@
 def debug(*args):
+    # TODO: add options to switch this flag
     if False:
         print(args)
 

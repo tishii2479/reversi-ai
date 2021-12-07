@@ -81,3 +81,23 @@ class Board:
                 if self.is_placeable(i, j, turn):
                     candidate.append((i, j))
         return candidate
+
+    def show_result(self):
+        self.show()
+        first, second = 0, 0
+        for i in range(8):
+            for j in range(8):
+                if self._board[i][j] == 1:
+                    first += 1
+                elif self._board[i][j] == -1:
+                    second += 1
+
+        print("First: {first}, Second: {second}".format(
+            first=first, second=second))
+
+        if first > second:
+            return 1
+        elif first == second:
+            return 0
+        else:
+            return -1

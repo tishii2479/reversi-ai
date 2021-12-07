@@ -21,3 +21,4 @@ while True:
     time.sleep(0.1)
 
 print('Game end')
+b.show_result()
