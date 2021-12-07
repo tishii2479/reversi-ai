@@ -1,7 +1,7 @@
-def debug(*args):
+def debug(*args, end='\n'):
     # TODO: add options to switch this flag
     if False:
-        print(args)
+        print(args, end=end)
 
 
 def is_valid_place(x, y):

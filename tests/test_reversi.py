@@ -20,5 +20,5 @@ class TestBoard(unittest.TestCase):
         self.assertTrue(b.place_disc(2, 4, 1))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

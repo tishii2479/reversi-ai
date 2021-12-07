@@ -66,6 +66,7 @@ class Board:
 
     # Shows the board status in formatted style
     def show_board(self):
+        print()
         for i in range(8):
             for j in range(8):
                 v = self._board[i][j]
@@ -102,7 +103,7 @@ class Board:
                 elif self._board[i][j] == -1:
                     second += 1
 
-        print("First: {first}, Second: {second}".format(
+        print('First: {first}, Second: {second}'.format(
             first=first, second=second))
 
         if first > second:
