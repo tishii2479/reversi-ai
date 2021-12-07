@@ -1,0 +1,8 @@
+TODO:
+Create position class:
+
+class Position:
+    def __init__(self, x, y):
+        # check is_valid_position()
+        self.x = x
+        self.y = y

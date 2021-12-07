@@ -59,7 +59,7 @@ class Board:
     def is_placeable(self, x, y, turn):
         return self.place_disc(x, y, turn, False)
 
-    def show(self):
+    def show_board(self):
         for i in range(8):
             for j in range(8):
                 v = self._board[i][j]
@@ -74,7 +74,7 @@ class Board:
             print()
         print()
 
-    def possible_place(self, turn):
+    def get_possible_place(self, turn):
         candidate = []
         for i in range(8):
             for j in range(8):
@@ -83,7 +83,7 @@ class Board:
         return candidate
 
     def show_result(self):
-        self.show()
+        self.show_board()
         first, second = 0, 0
         for i in range(8):
             for j in range(8):
