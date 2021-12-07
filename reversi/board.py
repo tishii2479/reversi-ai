@@ -11,8 +11,10 @@ class Board:
         self._board[3][3] = self._board[4][4] = 1
         self._board[4][3] = self._board[3][4] = -1
 
+    # Place disc at self._board[y][x] for player with turn = turn
     def place_disc(self, x, y, turn, do_flip=True):
-        if not is_valid_input(x, y):
+        # Check for invalid x and y
+        if not is_valid_place(x, y):
             debug(
                 'Invalid placement: disc can not be set at ({y}, {x})'.format(y=y, x=x))
             return False
@@ -22,6 +24,8 @@ class Board:
             return False
 
         # Check 8 directions if there is a disc that will be flipped
+        # If there aren't any discs, the x and y is invalid
+        # has_flipped is a flag for this
         directions = [(0, 1), (1, 1), (1, 0), (1, -1),
                       (0, -1), (-1, -1), (-1, 0), (-1, 0)]
 
@@ -30,7 +34,7 @@ class Board:
             has_other_stone = False
             for i in range(1, 8):
                 px, py = x + dx * i, y + dy * i
-                if not is_valid_input(px, py):
+                if not is_valid_place(px, py):
                     break
                 v = self._board[py][px]
 
@@ -56,9 +60,11 @@ class Board:
             self._board[y][x] = turn
         return True
 
+    # Returns self._board[y][x] is placeable
     def is_placeable(self, x, y, turn):
         return self.place_disc(x, y, turn, False)
 
+    # Shows the board status in formatted style
     def show_board(self):
         for i in range(8):
             for j in range(8):
@@ -74,6 +80,7 @@ class Board:
             print()
         print()
 
+    # Get possible places for player with turn
     def get_possible_place(self, turn):
         candidate = []
         for i in range(8):
@@ -82,7 +89,10 @@ class Board:
                     candidate.append((i, j))
         return candidate
 
-    def show_result(self):
+    # Show the status of the board, with counting the number of discs for each player
+    # Returns which is winning with value:
+    #   1 = first, 0 = draw, -1 = second
+    def show_status(self):
         self.show_board()
         first, second = 0, 0
         for i in range(8):

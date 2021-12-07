@@ -5,7 +5,12 @@ from reversi.board import Board
 import random
 
 
-class RandomPlayer:
+class Player:
+    def get_move(self, board, turn):
+        assert False, "Need to implement def get_move(self, board, turn) at subclass of Player"
+
+
+class RandomPlayer(Player):
     def __init__(self):
         pass
 
