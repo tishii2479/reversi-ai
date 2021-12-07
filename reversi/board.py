@@ -1,8 +1,8 @@
 import sys
-import numpy as np
 sys.path.append('..')
 
-from common.utils import is_valid_input
+import numpy as np
+from common.utils import *
 
 
 class Board:
@@ -11,13 +11,13 @@ class Board:
         self._board[3][3] = self._board[4][4] = 1
         self._board[4][3] = self._board[3][4] = -1
 
-    def place_disc(self, x, y, turn):
+    def place_disc(self, x, y, turn, do_flip=True):
         if not is_valid_input(x, y):
-            print(
+            debug(
                 'Invalid placement: disc can not be set at ({y}, {x})'.format(y=y, x=x))
             return False
         if self._board[y][x] != 0:
-            print(
+            debug(
                 'Invalid placement: disc already exist at ({y}, {x})'.format(y=y, x=x))
             return False
 
@@ -35,10 +35,10 @@ class Board:
                 v = self._board[py][px]
 
                 if (v == turn) and has_other_stone:
-                    # flip all
-                    for j in range(1, i + 1):
-                        self._board[y + dy * j][x + dx * j] = turn
-
+                    if do_flip:
+                        # flip all
+                        for j in range(1, i + 1):
+                            self._board[y + dy * j][x + dx * j] = turn
                     has_flipped = True
                     break
                 if v == -turn:
@@ -48,12 +48,16 @@ class Board:
                     break
 
         if not has_flipped:
-            print(
+            debug(
                 'Invalid placement: disc is not placeable at ({y}, {x})'.format(y=y, x=x))
             return False
 
-        self._board[y][x] = turn
+        if do_flip:
+            self._board[y][x] = turn
         return True
+
+    def is_placeable(self, x, y, turn):
+        return self.place_disc(x, y, turn, False)
 
     def show(self):
         for i in range(8):
@@ -68,3 +72,12 @@ class Board:
                 else:
                     assert False
             print()
+        print()
+
+    def possible_place(self, turn):
+        candidate = []
+        for i in range(8):
+            for j in range(8):
+                if self.is_placeable(i, j, turn):
+                    candidate.append((i, j))
+        return candidate
