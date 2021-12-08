@@ -28,7 +28,7 @@ class CNNPlayer(Player):
         self.model.load_params("params.pkl")
 
     def get_move(self, board, turn):
-        y = self.model.predict(board.get_board())
+        y = self.model.predict(board.get_board_copy())
         move_idx = np.arg_max(y)
         # convert idx to (x, y)
         return {'x': move_idx % 8, 'y': move_idx / 8}
@@ -39,7 +39,7 @@ class MonteCarloPlayer(Player):
         possible_moves = base_board.get_possible_moves(turn)
         max_win_count = -1
         max_win_move = None
-        board_data = base_board.get_board()
+        board_data = base_board.get_board_copy()
 
         for move in possible_moves:
             win_count = 0

@@ -104,8 +104,8 @@ class Board:
             print()
         print()
 
-    def get_board(self):
-        return self._board
+    def get_board_copy(self):
+        return self._board.copy()
 
     # Show the status of the board, with counting the number of discs for each player
     # Returns which is winning with value:

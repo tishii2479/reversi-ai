@@ -41,8 +41,8 @@ def generate_reversi_data(data_count):
     mcPlayer = MonteCarloPlayer()
 
     for i in range(data_count):
-        # if i != 0 and i % 50 == 0:
-        print(i)
+        if i != 0 and i % 50 == 0:
+            print(i)
 
         move = None
 
@@ -53,7 +53,7 @@ def generate_reversi_data(data_count):
 
         tx, ty = move['x'], move['y']
 
-        x.append(board)
+        x.append(board.get_board_copy())
         tv = np.zeros(64)
         tv[ty * 8 + tx] = 1
         y.append(tv)
