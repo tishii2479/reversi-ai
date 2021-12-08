@@ -1,5 +1,6 @@
 import sys
-sys.path.append('..')
+import os
+sys.path.append(os.pardir)
 
 from reversi.board import Board
 import time
@@ -14,13 +15,15 @@ class Director:
     # Returns which player won:
     # 1: first, 0: draw, -1: second
     # TODO: Return board?
-    def play_game(self, first_turn=1):
+    def play_game(self, first_turn=1, disc_limit=64):
         board = Board()
         assert first_turn * first_turn == 1, 'first_turn should be 1 or -1'
         turn = first_turn
 
         is_passed = False
-        while True:
+        disc_count = 4
+
+        while disc_count < disc_limit:
             move = self.players[turn].get_move(board, turn)
             # If there is no move for the current player
             if move == None:
@@ -51,6 +54,7 @@ class Director:
             # Turn goes to next player
             turn = -turn
             is_passed = False
+            disc_count += 1
 
         # print('Game end')
         return board

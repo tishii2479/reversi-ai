@@ -1,5 +1,6 @@
 import sys
-sys.path.append('..')
+import os
+sys.path.append(os.pardir)
 
 import numpy as np
 from common.utils import *

@@ -1,6 +1,7 @@
 import sys
 import os
-sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
+sys.path.append(os.pardir)
+
 import numpy as np
 from common.optimizer import *
 

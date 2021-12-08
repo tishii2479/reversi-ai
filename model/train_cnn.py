@@ -1,10 +1,12 @@
 import sys
-sys.path.append('..')
+import os
+sys.path.append(os.pardir)
+
 import numpy as np
 import matplotlib.pyplot as plt
 from model.cnn import ConvolutionalNeuralNetwork
 from common.trainer import Trainer
-from dataset.generator import load_reversi_data
+from dataset.reversi_data import load_reversi_data
 
 (x_train, t_train), (x_test, t_test) = load_reversi_data()
 

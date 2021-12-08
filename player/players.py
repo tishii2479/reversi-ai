@@ -1,5 +1,6 @@
 import sys
-sys.path.append('..')
+import os
+sys.path.append(os.pardir)
 
 from reversi.board import Board
 import numpy as np
@@ -27,5 +28,6 @@ class CNNPlayer(Player):
 
     def get_move(self, board, turn):
         y = self.model.predict(board)
+        print(board, y)
         move = np.arg_max(y)
         return move

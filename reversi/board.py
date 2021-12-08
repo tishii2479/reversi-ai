@@ -1,15 +1,23 @@
 import sys
-sys.path.append('..')
+import os
+sys.path.append(os.pardir)
 
 import numpy as np
 from common.utils import *
 
 
+def initial_board():
+    board = np.zeros((8, 8))
+    board[3][3] = board[4][4] = 1
+    board[4][3] = board[3][4] = -1
+    return board
+
+
 class Board:
-    def __init__(self):
-        self._board = [[0] * 8 for i in range(8)]
-        self._board[3][3] = self._board[4][4] = 1
-        self._board[4][3] = self._board[3][4] = -1
+    def __init__(self, board=initial_board()):
+        assert board.shape == (
+            8, 8), "Board size is invalid: {board}".format(board=board)
+        self._board = board
 
     # Place disc at self._board[y][x] for player with turn = turn
     def place_disc(self, x, y, turn, do_flip=True):
@@ -58,6 +66,7 @@ class Board:
 
         if do_flip:
             self._board[y][x] = turn
+
         return True
 
     # Returns self._board[y][x] is placeable
@@ -90,8 +99,8 @@ class Board:
             print()
         print()
 
-    def get_np_board(self):
-        return np.array(self._board)
+    def get_board(self):
+        return self._board
 
     # Show the status of the board, with counting the number of discs for each player
     # Returns which is winning with value:
