@@ -14,7 +14,9 @@ def initial_board():
 
 
 class Board:
-    def __init__(self, board=initial_board()):
+    def __init__(self, board=None):
+        if board is None:
+            board = initial_board()
         assert board.shape == (
             8, 8), "Board size is invalid: {board}".format(board=board)
         self._board = board
@@ -74,13 +76,16 @@ class Board:
         return self.place_disc(x, y, turn, False)
 
     # Get possible places for player with turn
-    def get_possible_place(self, turn):
+    def get_possible_moves(self, turn):
         candidate = []
         for i in range(8):
             for j in range(8):
                 if self.is_placeable(i, j, turn):
-                    candidate.append((i, j))
+                    candidate.append({'x': i, 'y': j})
         return candidate
+
+    def get_disc_count(self):
+        return 64 - np.sum(self._board == 0)
 
     # Shows the board status in formatted style
     def show_board(self):
@@ -107,14 +112,8 @@ class Board:
     #   1 = first, 0 = draw, -1 = second
     def show_status(self):
         self.show_board()
-        first, second = 0, 0
-        for i in range(8):
-            for j in range(8):
-                if self._board[i][j] == 1:
-                    first += 1
-                elif self._board[i][j] == -1:
-                    second += 1
 
+        first, second = self.get_result()
         print('First: {first}, Second: {second}'.format(
             first=first, second=second))
 
@@ -123,4 +122,10 @@ class Board:
         elif first == second:
             return 0
         else:
-            return -1
+            return - 1
+
+    def get_result(self):
+        first = np.sum(self._board == 1)
+        second = np.sum(self._board == -1)
+
+        return first, second

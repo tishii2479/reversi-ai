@@ -15,13 +15,14 @@ class Director:
     # Returns which player won:
     # 1: first, 0: draw, -1: second
     # TODO: Return board?
-    def play_game(self, first_turn=1, disc_limit=64):
-        board = Board()
+    def play_game(self, first_turn=1, disc_limit=64, board=None):
+        if board is None:
+            board = Board()
         assert first_turn * first_turn == 1, 'first_turn should be 1 or -1'
         turn = first_turn
 
         is_passed = False
-        disc_count = 4
+        disc_count = board.get_disc_count()
 
         while disc_count < disc_limit:
             move = self.players[turn].get_move(board, turn)
@@ -30,7 +31,7 @@ class Director:
                 # It is not allowed to not move if it is possible to place a disc.
                 # This line is for double checking, if the player is valid, we don't need this.
                 # TODO: Move to tests for performance?
-                if len(board.get_possible_place(turn)) != 0:
+                if len(board.get_possible_moves(turn)) != 0:
                     assert False, 'Player was able to move, but did not, quit game'
 
                 # If the previous player passed, and the current player passed,
@@ -44,7 +45,7 @@ class Director:
                 turn = -turn
                 continue
 
-            x, y = move
+            x, y = move['x'], move['y']
 
             # Place disc, but check it is valid
             # If not, the player algorithm has a problem.
@@ -56,5 +57,4 @@ class Director:
             is_passed = False
             disc_count += 1
 
-        # print('Game end')
         return board

@@ -6,11 +6,11 @@ b = Board()
 turn = 1
 
 while True:
-    candidate = b.get_possible_place(turn)
+    candidate = b.get_possible_moves(turn)
 
     if len(candidate) == 0:
         turn = -turn
-        if len(b.get_possible_place(turn)) == 0:
+        if len(b.get_possible_moves(turn)) == 0:
             break
         continue
 

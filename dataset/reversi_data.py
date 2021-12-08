@@ -7,7 +7,7 @@ import random
 import pickle
 from reversi.board import Board
 from common.director import Director
-from player.players import RandomPlayer
+from player.players import RandomPlayer, MonteCarloPlayer
 
 dataset_dir = os.path.dirname(os.path.abspath(__file__))
 save_file = 'reversi_data.pkl'
@@ -37,23 +37,26 @@ def load_reversi_data(data_count=10000):
 
 def generate_reversi_data(data_count):
     x, y = [], []
-    remove_cnt = 5
+    remove_cnt = 6
+    mcPlayer = MonteCarloPlayer()
 
     for i in range(data_count):
-        if i % 50 == 0:
-            print(i)
+        # if i != 0 and i % 50 == 0:
+        print(i)
 
-        director = Director([RandomPlayer(), RandomPlayer()])
-        board = director.play_game(disc_limit=64 - remove_cnt)
-        end_board = board.get_board()
+        move = None
 
-        px, py = 0, 0
+        while move == None:
+            director = Director([RandomPlayer(), RandomPlayer()])
+            board = director.play_game(disc_limit=64 - remove_cnt)
+            move = mcPlayer.get_move(board, 1)
 
-        x.append(end_board)
-        t = np.zeros(64)
-        t[py * 8 + px] = 1
-        y.append(t)
+        tx, ty = move['x'], move['y']
 
+        x.append(board)
+        tv = np.zeros(64)
+        tv[ty * 8 + tx] = 1
+        y.append(tv)
     return x, y
 
 
