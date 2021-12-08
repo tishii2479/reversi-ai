@@ -2,6 +2,7 @@ import sys
 sys.path.append('..')
 
 from reversi.board import Board
+import numpy as np
 import random
 
 
@@ -20,5 +21,11 @@ class RandomPlayer(Player):
 
 
 class CNNPlayer(Player):
+    def __init__(self):
+        self.model = ConvolutionalNeuralNetwork()
+        self.model.load_params("params.pkl")
+
     def get_move(self, board, turn):
-        return None
+        y = self.model.predict(board)
+        move = np.arg_max(y)
+        return move

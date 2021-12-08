@@ -4,22 +4,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from model.cnn import ConvolutionalNeuralNetwork
 from common.trainer import Trainer
+from dataset.generator import load_reversi_data
 
-# データの読み込み
-# Load reversi data set.
-# (x_train, t_train), (x_test, t_test) =
+(x_train, t_train), (x_test, t_test) = load_reversi_data()
 
 max_epochs = 20
 
-network = ConvolutionalNeuralNetwork(input_dim=(1, 8, 8),
-                                     conv_param={'filter_num': 30,
-                                                 'filter_size': 5, 'pad': 0, 'stride': 1},
-                                     hidden_size=100, output_size=10, weight_init_std=0.01)
+network = ConvolutionalNeuralNetwork()
 
 trainer = Trainer(network, x_train, t_train, x_test, t_test,
-                  epochs=max_epochs, mini_batch_size=100,
+                  epochs=max_epochs, mini_batch_size=200,
                   optimizer='Adam', optimizer_param={'lr': 0.001},
-                  evaluate_sample_num_per_epoch=1000)
+                  evaluate_sample_num_per_epoch=50)
 trainer.train()
 
 # パラメータの保存

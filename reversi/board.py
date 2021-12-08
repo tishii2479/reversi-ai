@@ -64,6 +64,15 @@ class Board:
     def is_placeable(self, x, y, turn):
         return self.place_disc(x, y, turn, False)
 
+    # Get possible places for player with turn
+    def get_possible_place(self, turn):
+        candidate = []
+        for i in range(8):
+            for j in range(8):
+                if self.is_placeable(i, j, turn):
+                    candidate.append((i, j))
+        return candidate
+
     # Shows the board status in formatted style
     def show_board(self):
         print()
@@ -81,14 +90,8 @@ class Board:
             print()
         print()
 
-    # Get possible places for player with turn
-    def get_possible_place(self, turn):
-        candidate = []
-        for i in range(8):
-            for j in range(8):
-                if self.is_placeable(i, j, turn):
-                    candidate.append((i, j))
-        return candidate
+    def get_np_board(self):
+        return np.array(self._board)
 
     # Show the status of the board, with counting the number of discs for each player
     # Returns which is winning with value:

@@ -14,7 +14,7 @@ class Director:
     # Returns which player won:
     # 1: first, 0: draw, -1: second
     # TODO: Return board?
-    def start_game(self, first_turn=1):
+    def play_game(self, first_turn=1):
         board = Board()
         assert first_turn * first_turn == 1, 'first_turn should be 1 or -1'
         turn = first_turn
@@ -52,5 +52,5 @@ class Director:
             turn = -turn
             is_passed = False
 
-        print('Game end')
-        return board.show_status()
+        # print('Game end')
+        return board
