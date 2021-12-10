@@ -7,7 +7,6 @@ from common.director import Director
 from common.function import *
 import numpy as np
 from model.cnn import ConvolutionalNeuralNetwork
-from model.deep_cnn import DeepConvNet
 import random
 
 
@@ -31,23 +30,9 @@ class RandomPlayer(Player):
 
 
 class CNNPlayer(Player):
-    # Player that uses convolution network
+    # Player that uses convolutional network
     def __init__(self):
         self.network = ConvolutionalNeuralNetwork()
-        self.network.load_params("params.pkl")
-
-    def get_move(self, board, turn):
-        y = self.network.predict(board.get_board_copy().reshape(-1, 1, 8, 8))
-        y = softmax(y[0])
-        move_idx = np.argmax(y)
-        # convert idx to (x, y)
-        return {'x': move_idx % 8, 'y': move_idx // 8}
-
-
-class DeepCNNPlayer(Player):
-    # Player that uses deep convolution network
-    def __init__(self):
-        self.network = DeepConvNet()
         self.network.load_params("params.pkl")
 
     def get_move(self, board, turn):
