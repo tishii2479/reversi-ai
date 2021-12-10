@@ -5,19 +5,20 @@ sys.path.append(os.pardir)
 import numpy as np
 import matplotlib.pyplot as plt
 from model.cnn import ConvolutionalNeuralNetwork
+from model.deep_cnn import DeepConvNet
 from common.trainer import Trainer
 from dataset.reversi_data import load_reversi_data
 
 (x_train, t_train), (x_test, t_test) = load_reversi_data()
 
-max_epochs = 20
+max_epochs = 100
 
-network = ConvolutionalNeuralNetwork()
+network = DeepConvNet()
 
 trainer = Trainer(network, x_train, t_train, x_test, t_test,
-                  epochs=max_epochs, mini_batch_size=200,
+                  epochs=max_epochs, mini_batch_size=50,
                   optimizer='Adam', optimizer_param={'lr': 0.001},
-                  evaluate_sample_num_per_epoch=50)
+                  evaluate_sample_num_per_epoch=None)
 trainer.train()
 
 # パラメータの保存

@@ -4,7 +4,10 @@ sys.path.append(os.pardir)
 
 from reversi.board import Board
 from common.director import Director
+from common.function import *
 import numpy as np
+from model.cnn import ConvolutionalNeuralNetwork
+from model.deep_cnn import DeepConvNet
 import random
 
 
@@ -24,14 +27,28 @@ class RandomPlayer(Player):
 
 class CNNPlayer(Player):
     def __init__(self):
-        self.model = ConvolutionalNeuralNetwork()
-        self.model.load_params("params.pkl")
+        self.network = ConvolutionalNeuralNetwork()
+        self.network.load_params("params.pkl")
 
     def get_move(self, board, turn):
-        y = self.model.predict(board.get_board_copy())
-        move_idx = np.arg_max(y)
+        y = self.network.predict(board.get_board_copy().reshape(-1, 1, 8, 8))
+        y = softmax(y[0])
+        move_idx = np.argmax(y)
         # convert idx to (x, y)
-        return {'x': move_idx % 8, 'y': move_idx / 8}
+        return {'x': move_idx % 8, 'y': move_idx // 8}
+
+
+class DeepCNNPlayer(Player):
+    def __init__(self):
+        self.network = DeepConvNet()
+        self.network.load_params("params.pkl")
+
+    def get_move(self, board, turn):
+        y = self.network.predict(board.get_board_copy().reshape(-1, 1, 8, 8))
+        y = softmax(y[0])
+        move_idx = np.argmax(y)
+        # convert idx to (x, y)
+        return {'x': move_idx % 8, 'y': move_idx // 8}
 
 
 class MonteCarloPlayer(Player):
@@ -44,7 +61,7 @@ class MonteCarloPlayer(Player):
         for move in possible_moves:
             win_count = 0
             x, y = move['x'], move['y']
-            test_count = 50
+            test_count = 10
 
             for _ in range(test_count):
                 board = Board(board=board_data.copy())

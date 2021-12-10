@@ -9,6 +9,10 @@ from common.gradient import numerical_gradient
 from model.layers import *
 
 
+params_dir = os.path.dirname(os.path.abspath(__file__))
+param_file = 'params.pkl'
+
+
 class ConvolutionalNeuralNetwork:
     def __init__(self, input_dim=(1, 8, 8),
                  conv_param={'filter_num': 30,
@@ -72,6 +76,7 @@ class ConvolutionalNeuralNetwork:
             y = self.predict(tx)
             y = np.argmax(y, axis=1)
             acc += np.sum(y == tt)
+
         return acc / x.shape[0]
 
     def numerical_gradient(self, x, t):
@@ -108,14 +113,16 @@ class ConvolutionalNeuralNetwork:
         return grads
 
     def save_params(self, file_name="params.pkl"):
+        file_path = params_dir + "/" + file_name
         params = {}
         for key, val in self.params.items():
             params[key] = val
-        with open(file_name, 'wb') as f:
+        with open(file_path, 'wb') as f:
             pickle.dump(params, f)
 
     def load_params(self, file_name="params.pkl"):
-        with open(file_name, 'rb') as f:
+        file_path = params_dir + "/" + file_name
+        with open(file_path, 'rb') as f:
             params = pickle.load(f)
         for key, val in params.items():
             self.params[key] = val

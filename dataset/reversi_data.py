@@ -17,13 +17,14 @@ def load_reversi_data(data_count=10000):
     file_path = dataset_dir + "/" + save_file
 
     if os.path.exists(file_path):
-        print(file_path, " exists, read data.")
+        print(file_path, "exists, read data.")
         with open(file_path, 'rb') as f:
             data = pickle.load(f)
             x, y = data['x'], data['y']
     else:
-        print(file_path, " doesn't exist, generate data.")
+        print(file_path, "doesn't exist, generate data.")
         x, y = generate_reversi_data(data_count)
+        print('generated data to', file_path)
 
     data = {'x': x, 'y': y}
     with open(file_path, 'wb') as f:
