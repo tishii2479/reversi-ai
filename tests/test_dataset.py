@@ -10,7 +10,6 @@ from dataset.reversi_data import *
 class TestGenerateReversiData(unittest.TestCase):
     def test_generate(self):
         x, y = generate_reversi_data(10)
-        print(x, y)
         pass
 
 

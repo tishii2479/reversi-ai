@@ -13,12 +13,11 @@ param_file = 'params.pkl'
 
 
 class ConvolutionalNeuralNetwork:
-    """認識率99%以上の高精度なConvNet
-    ネットワーク構成は下記の通り
-        conv - relu - conv- relu - pool -
-        conv - relu - conv- relu - pool -
-        conv - relu - conv- relu - pool -
-        affine - relu - dropout - affine - dropout - softmax
+    """ 
+    conv - relu - conv- relu - pool -
+    conv - relu - conv- relu - pool -
+    conv - relu - conv- relu - pool -
+    affine - relu - dropout - affine - dropout - softmax
     """
 
     def __init__(self, input_dim=(1, 8, 8),

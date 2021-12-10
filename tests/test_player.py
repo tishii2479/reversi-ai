@@ -15,14 +15,14 @@ class TestCNNPlayer(unittest.TestCase):
         cnt = 0
         for i in range(10):
             b = Board(board=x[i])
-            b.show_board()
+            # b.show_board()
             turn = 1
             move = player.get_move(b, turn)
             print('best move is', move)
             y = np.zeros(64)
             t_idx = np.argmax(t[i])
             cnt += b.is_placeable(move['x'], move['y'], turn)
-        print(cnt / 100)
+        print(cnt / 10)
 
 
 class TestMonteCarloPlayer(unittest.TestCase):
@@ -31,14 +31,15 @@ class TestMonteCarloPlayer(unittest.TestCase):
         x, t = generate_reversi_data(10)
         for i in range(10):
             b = Board(board=x[i])
-            b.show_board()
+            # b.show_board()
             turn = 1
             move = player.get_move(b, turn)
             print('best move is', move)
             y = np.zeros(64)
             t_idx = np.argmax(t[i])
-            self.assertTrue(move['x'] == t_idx %
-                            8 and move['y'] == t_idx // 8, 'move: {move}, t_idx: {t_idx}'.format(move=move, t_idx=t_idx))
+            tx, ty = t_idx % 8, t_idx // 8
+            self.assertTrue(move['x'] == tx and move['y'] == ty,
+                            'move: {move}, t_idx: {t_idx}'.format(move=move, t_idx=t_idx))
 
 
 if __name__ == '__main__':

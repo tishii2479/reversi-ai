@@ -84,6 +84,7 @@ class Board:
                     candidate.append({'x': i, 'y': j})
         return candidate
 
+    # Returns placed disc count
     def get_disc_count(self):
         return 64 - np.sum(self._board == 0)
 
@@ -104,6 +105,7 @@ class Board:
             print()
         print()
 
+    # Returns copied board data
     def get_board_copy(self):
         return self._board.copy()
 
@@ -124,6 +126,7 @@ class Board:
         else:
             return - 1
 
+    # Returns result of disc count of players
     def get_result(self):
         first = np.sum(self._board == 1)
         second = np.sum(self._board == -1)
