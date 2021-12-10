@@ -14,6 +14,9 @@ save_file = 'reversi_data.pkl'
 
 
 def load_reversi_data(data_count=10000):
+    # Returns reversi dataset at file_path
+    # If dataset does not exist, generate by using generate_reversi_data(data_count)
+
     file_path = dataset_dir + "/" + save_file
 
     if os.path.exists(file_path):
@@ -37,6 +40,9 @@ def load_reversi_data(data_count=10000):
 
 
 def generate_reversi_data(data_count):
+    # Generate reversi dataset
+    # TODO: Improve algorithm
+
     x, y = [], []
     remove_cnt = 6
     mcPlayer = MonteCarloPlayer()

@@ -12,11 +12,16 @@ import random
 
 
 class Player:
+    # Base class for player
+    # Each Player should override def get_move(self, board, turn):
+    # board: reversi.board.Board
+    # turn: which get which turn is the player
     def get_move(self, board, turn):
         assert False, 'Need to implement def get_move(self, board, turn) at subclass of Player'
 
 
 class RandomPlayer(Player):
+    # Player who selects move randomly
     def get_move(self, board, turn):
         candidate = board.get_possible_moves(turn)
 
@@ -26,6 +31,7 @@ class RandomPlayer(Player):
 
 
 class CNNPlayer(Player):
+    # Player that uses convolution network
     def __init__(self):
         self.network = ConvolutionalNeuralNetwork()
         self.network.load_params("params.pkl")
@@ -39,6 +45,7 @@ class CNNPlayer(Player):
 
 
 class DeepCNNPlayer(Player):
+    # Player that uses deep convolution network
     def __init__(self):
         self.network = DeepConvNet()
         self.network.load_params("params.pkl")
@@ -52,6 +59,9 @@ class DeepCNNPlayer(Player):
 
 
 class MonteCarloPlayer(Player):
+    # Player that uses monte carlo to get move
+    # It is mainly used to generate reversi board data
+    # TODO: Use better algorithm
     def get_move(self, base_board, turn):
         possible_moves = base_board.get_possible_moves(turn)
         max_win_count = -1
