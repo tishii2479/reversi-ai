@@ -30,7 +30,7 @@ class TestMonteCarloPlayer(unittest.TestCase):
         player = MonteCarloPlayer()
         x, t = generate_reversi_data(10)
         for i in range(10):
-            b = x[i]
+            b = Board(board=x[i])
             b.show_board()
             turn = 1
             move = player.get_move(b, turn)
