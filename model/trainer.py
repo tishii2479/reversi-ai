@@ -3,7 +3,7 @@ import os
 sys.path.append(os.pardir)
 
 import numpy as np
-from common.optimizer import *
+from model.optimizer import *
 
 
 class Trainer:

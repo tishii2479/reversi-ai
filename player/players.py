@@ -4,7 +4,7 @@ sys.path.append(os.pardir)
 
 from reversi.board import Board
 from common.director import Director
-from common.function import *
+from model.function import *
 import numpy as np
 from model.cnn import ConvolutionalNeuralNetwork
 import random

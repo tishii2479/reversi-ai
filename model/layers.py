@@ -4,7 +4,7 @@ sys.path.append(os.pardir)
 
 import numpy as np
 from common.utils import *
-from common.function import *
+from model.function import *
 
 
 class ReluLayer:
