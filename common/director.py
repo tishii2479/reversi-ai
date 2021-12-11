@@ -15,7 +15,7 @@ class Director:
     # Returns which player won:
     # 1: first, 0: draw, -1: second
     # TODO: Return board?
-    def play_game(self, first_turn=1, disc_limit=64, board=None):
+    def play_game(self, first_turn=1, disc_limit=64, board=None, verbose=False):
         if board is None:
             board = Board()
         assert first_turn * first_turn == 1, 'first_turn should be 1 or -1'
@@ -23,6 +23,9 @@ class Director:
 
         is_passed = False
         disc_count = board.get_disc_count()
+
+        if verbose:
+            board.show_status()
 
         while disc_count < disc_limit:
             move = self.players[turn].get_move(board, turn)
@@ -50,11 +53,15 @@ class Director:
             # Place disc, but check it is valid
             # If not, the player algorithm has a problem.
             if not board.place_disc(x, y, turn):
-                assert False, 'Player move was invalid, quit game'
+                assert False, 'Player move ({y}, {x}) was invalid, quit game'.format(
+                    y=y, x=x)
 
             # Turn goes to next player
             turn = -turn
             is_passed = False
             disc_count += 1
+
+            if verbose:
+                board.show_status()
 
         return board

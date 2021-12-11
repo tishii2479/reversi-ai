@@ -27,11 +27,10 @@ def load_reversi_data(data_count=10000):
     else:
         print(file_path, "doesn't exist, generate data.")
         x, y = generate_reversi_data(data_count)
+        data = {'x': x, 'y': y}
+        with open(file_path, 'wb') as f:
+            pickle.dump(data, f)
         print('generated data to', file_path)
-
-    data = {'x': x, 'y': y}
-    with open(file_path, 'wb') as f:
-        pickle.dump(data, f)
 
     train_count = data_count * 9 // 10
     x = np.array(x).reshape(-1, 1, 8, 8)
