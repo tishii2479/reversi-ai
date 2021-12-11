@@ -10,7 +10,7 @@ from dataset.reversi_data import load_reversi_data
 
 (x_train, t_train), (x_test, t_test) = load_reversi_data()
 
-max_epochs = 40
+max_epochs = 50
 
 network = ConvolutionalNeuralNetwork()
 

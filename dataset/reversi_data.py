@@ -32,9 +32,18 @@ def load_reversi_data(data_count=10000):
             pickle.dump(data, f)
         print('generated data to', file_path)
 
-    train_count = data_count * 9 // 10
     x = np.array(x).reshape(-1, 1, 8, 8)
     y = np.array(y)
+    train_count = data_count * 9 // 10
+    nx = []
+    for e in x:
+        for i in range(4):
+            nx.append(np.rot90(e, i, axes=(1, 2)))
+    x = np.array(nx)
+    np.random.shuffle(x)
+    np.random.shuffle(y)
+    x = x[:data_count]
+    y = y[:data_count]
     return (x[:train_count], y[:train_count]), (x[train_count:], y[train_count:])
 
 
